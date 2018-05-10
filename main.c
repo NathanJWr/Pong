@@ -41,7 +41,7 @@ int main() {
       int limit = 10;
       while((next_game_step <= now) && (limit--)) {
         moveAIPaddle(&paddle2, &ball);
-        moveBall(&ball, &paddle1);
+        moveBall(&ball, &paddle1, &paddle2);
         while(SDL_PollEvent(&e) != 0) {
           if(e.type == SDL_QUIT) {
           quit = true;

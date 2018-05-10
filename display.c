@@ -11,7 +11,7 @@ SDL_Renderer* gRenderer = NULL;
 void updateScreen() {
   SDL_RenderPresent(gRenderer);
 
-  SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+  SDL_SetRenderDrawColor( gRenderer, 0, 0, 0, 0 );
   SDL_RenderClear( gRenderer );
 }
 
@@ -56,7 +56,7 @@ void killDisplay() {
 }
 
 void drawPaddle(SDL_Rect* paddle) {
-  SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
+  SDL_SetRenderDrawColor(gRenderer, 102, 255, 102, 0xFF);
   SDL_RenderFillRect(gRenderer, paddle);
 }
 
@@ -65,7 +65,7 @@ void drawBall(Ball* ball) {
   int y0 = ball -> y;
   int r = ball -> radius;
   
-  SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+  SDL_SetRenderDrawColor(gRenderer, 102, 255, 102, 0xFF);
   int x = r - 1;
   int y = 0;
   int dx = 1;

@@ -10,13 +10,16 @@
 #define PADDLE_W (SCREEN_W / 25)
 #define PADDLE_H (SCREEN_H / 3)
 void moveAIPaddle(SDL_Rect* paddle, Ball* ball) {
-  int move_unit = 4;
-  if(ball -> dy > 0 && paddle -> y <= SCREEN_H - PADDLE_H) {
+  int move_unit = 2;
+  if(ball -> y > (paddle -> y) + (PADDLE_H / 2) 
+      && paddle -> y <= SCREEN_H - PADDLE_H) {
     paddle -> y += move_unit;
   }
-  else if(ball -> dy < 0 && paddle -> y >= 0) {
+  else if(ball -> y < (paddle -> y) + (PADDLE_H / 2) 
+      && paddle -> y >= 0) {
     paddle -> y -= move_unit;
   }
+  printf("%d %d\n", paddle -> y + (PADDLE_H / 2), ball -> y);
 }
 void movePaddle(SDL_Event* e, SDL_Rect* paddle) {
   int move_unit = 8;

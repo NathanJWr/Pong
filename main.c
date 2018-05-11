@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define SCREEN_W 600
 #define SCREEN_H 400
@@ -25,7 +27,9 @@ int main() {
   {SCREEN_W - PADDLE_W - 10,
     (SCREEN_H / 2) - (PADDLE_H / 2), PADDLE_W, PADDLE_H};
 
-  Ball ball = {SCREEN_W / 2, SCREEN_H / 2, 10, 2, 2};
+  srand(time(0));
+  int dy = (rand() % 4) - 2;
+  Ball ball = {SCREEN_W / 2, SCREEN_H / 2, 10, 2, dy};
 
 
 

@@ -21,7 +21,7 @@ void movePaddle(SDL_Event* e, SDL_Rect* paddle) {
   if(e -> type == SDL_KEYDOWN) {
     switch(e -> key.keysym.sym) {
       case SDLK_UP:
-        if(paddle -> y >= move_unit) {
+        if(paddle -> y >= 0) {
           paddle -> y -= move_unit;
         }
         break;
@@ -45,12 +45,12 @@ void moveBall(Ball* ball, SDL_Rect* paddle1, SDL_Rect* paddle2) {
       && ball -> y <= paddle1 -> y + PADDLE_H 
       && ball -> y >= paddle1 -> y) {
 
-    ball -> dx = - ball -> dx;
-
+      ball -> dx = - ball -> dx;
   }
   if(ball -> y <= (paddle1 -> y) + PADDLE_H + 3
       && ball -> y >= paddle1 -> y
       && ball -> x <= paddle1 -> x + PADDLE_W) {
+
     ball -> dy = - ball -> dy;
   }
   if(ball -> y >= SCREEN_H || ball -> y < 0) {

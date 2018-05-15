@@ -17,8 +17,10 @@ int main() {
   const int waittime = 1000.0f/gameTick;
   int next_game_step = SDL_GetTicks(); //initial value
  
-    const int renderFPS = 1000.0f/60;
-    int framestarttime = 0;
+  const int renderFPS = 1000.0f/60;
+  int framestarttime = 0;
+
+
   //Create Game Objects
   SDL_Rect paddle1 = 
   {10, (SCREEN_H / 2) - (PADDLE_H / 2), PADDLE_W, PADDLE_H}; 
@@ -28,15 +30,22 @@ int main() {
     (SCREEN_H / 2) - (PADDLE_H / 2), PADDLE_W, PADDLE_H};
 
   srand(time(0));
-  int dy = (rand() % 4) - 2;
-  Ball ball = {SCREEN_W / 2, SCREEN_H / 2, 10, 2, dy};
+  int dy = 0;
+  while(dy == 0) {
+    dy = (rand() % 6) - 3;
+  }
+  Ball ball = {SCREEN_W / 2, SCREEN_H / 2, 9, 3, dy};
 
 
 
   initVideo();
   bool quit = false;
+  bool paused = false;
   SDL_Event e;
-
+  drawPaddle(&paddle2);
+  drawPaddle(&paddle1);
+  drawBall(&ball);
+  updateScreen();
   //Game Loop
   while(!quit) {
     int now = SDL_GetTicks();
@@ -44,23 +53,32 @@ int main() {
     if(next_game_step <= now) {
       int limit = 10;
       while((next_game_step <= now) && (limit--)) {
-        moveAIPaddle(&paddle2, &ball);
-        moveBall(&ball, &paddle1, &paddle2);
+        if(!paused) {
+          moveAIPaddle(&paddle2, &ball);
+          moveBall(&ball, &paddle1, &paddle2);
+        }
         while(SDL_PollEvent(&e) != 0) {
           if(e.type == SDL_QUIT) {
-          quit = true;
-        }
-          else {
-            movePaddle(&e, &paddle1);
+            quit = true;
+          }
+          else if(e.type == SDL_KEYDOWN) {
+            if(e.key.keysym.sym == SDLK_ESCAPE) {
+              paused = !paused;
+            }
+            else if(!paused) {
+              movePaddle(&e, &paddle1);
+            }
           }
         }
         next_game_step += waittime;
       }
-      //Rendering
-      drawPaddle(&paddle2);
-      drawPaddle(&paddle1);
-      drawBall(&ball);
-      updateScreen();
+      if(!paused) {
+        //Rendering
+        drawPaddle(&paddle2);
+        drawPaddle(&paddle1);
+        drawBall(&ball);
+        updateScreen();
+      }
     }
     //limit fps
     int delaytime = renderFPS - (SDL_GetTicks() - framestarttime);

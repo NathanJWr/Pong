@@ -40,7 +40,8 @@ int main() {
 
   initVideo();
   bool quit = false;
-  bool paused = false;
+  bool paused = true;
+  bool out_of_bounds = false;
   SDL_Event e;
   drawPaddle(&paddle2);
   drawPaddle(&paddle1);
@@ -55,7 +56,7 @@ int main() {
       while((next_game_step <= now) && (limit--)) {
         if(!paused) {
           moveAIPaddle(&paddle2, &ball);
-          moveBall(&ball, &paddle1, &paddle2);
+          out_of_bounds = moveBall(&ball, &paddle1, &paddle2);
         }
         while(SDL_PollEvent(&e) != 0) {
           if(e.type == SDL_QUIT) {
@@ -86,6 +87,10 @@ int main() {
       SDL_Delay(delaytime);
     }
     framestarttime = SDL_GetTicks();
+
+    if(out_of_bounds) {
+      paused = true;
+    }
   }
   killDisplay();
   return 0;

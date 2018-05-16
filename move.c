@@ -1,10 +1,12 @@
 #include <SDL2/SDL.h>
+#include <stdbool.h>
 #include "structs.h"
 #define SCREEN_W 600
 #define SCREEN_H 400
 
 #define PADDLE_W (SCREEN_W / 25)
 #define PADDLE_H (SCREEN_H / 3)
+
 void moveAIPaddle(SDL_Rect* paddle, Ball* ball) {
   int move_unit = 2;
   if(ball -> y > (paddle -> y) + (PADDLE_H / 2) 
@@ -34,7 +36,7 @@ void movePaddle(SDL_Event* e, SDL_Rect* paddle) {
   }
 }
 
-void moveBall(Ball* ball, SDL_Rect* paddle1, SDL_Rect* paddle2) {
+bool moveBall(Ball* ball, SDL_Rect* paddle1, SDL_Rect* paddle2) {
   if(ball -> x >= SCREEN_W ) {
     ball -> dx = - ball -> dx;
   }
@@ -68,5 +70,11 @@ void moveBall(Ball* ball, SDL_Rect* paddle1, SDL_Rect* paddle2) {
 
   ball -> x += ball -> dx;
   ball -> y += ball -> dy;
+  if(ball -> x <= 0) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 

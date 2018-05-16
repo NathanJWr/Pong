@@ -6,7 +6,15 @@
 
 #define PADDLE_W (SCREEN_W / 25)
 #define PADDLE_H (SCREEN_H / 3)
-
+void resetBall(Ball* ball) {
+  ball -> radius = 9;
+  ball -> y = SCREEN_H / 2;
+  ball -> x = SCREEN_W / 2;
+  ball -> dx = 3;
+  do {
+    ball -> dy = (rand() % 6) - 3;
+  } while(ball -> dy == 0);
+}
 void moveAIPaddle(SDL_Rect* paddle, Ball* ball) {
   int move_unit = 2;
   if(ball -> y > (paddle -> y) + (PADDLE_H / 2) 

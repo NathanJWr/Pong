@@ -30,11 +30,8 @@ int main() {
     (SCREEN_H / 2) - (PADDLE_H / 2), PADDLE_W, PADDLE_H};
 
   srand(time(0));
-  int dy = 0;
-  while(dy == 0) {
-    dy = (rand() % 6) - 3;
-  }
-  Ball ball = {SCREEN_W / 2, SCREEN_H / 2, 9, 3, dy};
+  Ball ball;
+  resetBall(&ball);
 
 
 
@@ -42,6 +39,8 @@ int main() {
   bool quit = false;
   bool paused = true;
   bool out_of_bounds = false;
+  bool reset = false;
+
   SDL_Event e;
   drawPaddle(&paddle2);
   drawPaddle(&paddle1);
@@ -90,7 +89,9 @@ int main() {
 
     if(out_of_bounds) {
       paused = true;
+      resetBall(&ball);
     }
+
   }
   killDisplay();
   return 0;
